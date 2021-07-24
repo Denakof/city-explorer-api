@@ -12,7 +12,12 @@ function movieHandler(request, response) {
   let url = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.api_key}&query=${searchQuery}`;
   if (memo[searchQuery] !== undefined) {
     console.log("catch ittt");
-    response.send(memo[searchQuery]);
+    response.send(memo[searchQuery].map((item) => {
+      return new Movie(item);
+    })
+  );
+  
+
   } else {
     axios
       .get(url)
